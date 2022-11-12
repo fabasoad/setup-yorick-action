@@ -44,7 +44,7 @@ jobs:
       - name: Install tools
         run: |
           apk update
-          apk add --update bash
+          apk add --update bash make
         shell: sh
       - name: Setup Jolie
         uses: ./
