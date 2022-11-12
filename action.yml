@@ -32,5 +32,11 @@ runs:
     - name: Install yorick
       run: |
         make install
+        echo ">>> ls -A"
+        ls -A
+        echo ">>> ls -A relocate"
+        ls -A relocate/
+        echo ">>> ls -A relocate/bin"
+        ls -A relocate/bin/
       shell: bash
       working-directory: ${{ steps.info.outputs.YORICK_PATH }}
