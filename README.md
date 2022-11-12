@@ -37,12 +37,13 @@ jobs:
         with:
           version: y_2_2_04
       - name: Print version
-        run: yorick -v
+        run: yorick --version
 ```
 
 ### Result
 
 ```shell
-Run yorick -v
-yorick version: 3.4
+Run yorick --version
+Copyright (c) 2005.  The Regents of the University of California.
+All rights reserved.  Yorick 2.2.04 ready.  For help type 'help'
 ```

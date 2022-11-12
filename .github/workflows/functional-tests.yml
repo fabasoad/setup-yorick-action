@@ -14,8 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-#        os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
-        os: ['ubuntu-latest']
+        os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
 #        version: ['y_2_2_04', 'y_2_2_03', 'y_2_2_02']
         version: ['y_2_2_04']
     runs-on: ${{ matrix.os }}
@@ -44,9 +43,9 @@ jobs:
       - name: Install tools
         run: |
           apk update
-          apk add --update bash make
+          apk add --update bash make build-base
         shell: sh
-      - name: Setup Jolie
+      - name: Setup Yorick
         uses: ./
         with:
           version: ${{ matrix.version }}
