@@ -16,7 +16,7 @@ jobs:
       matrix:
         os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
 #        version: ['y_2_2_04', 'y_2_2_03', 'y_2_2_02']
-        version: ['y_2_2_04']
+        version: ['2.2.04']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -34,7 +34,7 @@ jobs:
       fail-fast: false
       matrix:
 #        version: ['y_2_2_04', 'y_2_2_03', 'y_2_2_02']
-        version: ['y_2_2_04']
+        version: ['2.2.03']
     runs-on: ubuntu-latest
     container:
       image: alpine:latest

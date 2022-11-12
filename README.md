@@ -14,9 +14,9 @@ The following tools have to be installed for successful work of this GitHub acti
 
 ## Inputs
 
-| Name    | Required | Description                                                                  | Default    | Possible values              |
-|---------|----------|------------------------------------------------------------------------------|------------|------------------------------|
-| version | No       | Yorick version that can be found [here](https://github.com/LLNL/yorick/tags) | `y_2_2_04` | `Y_2_2_03`, `y_2_2_02`, etc. |
+| Name    | Required | Description                                                                  | Default  | Possible values          |
+|---------|----------|------------------------------------------------------------------------------|----------|--------------------------|
+| version | No       | Yorick version that can be found [here](https://github.com/LLNL/yorick/tags) | `2.2.04` | `2.2.03`, `2.2.02`, etc. |
 
 ## Example usage
 
@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@main
       - uses: fabasoad/setup-yorick-action@main
         with:
-          version: y_2_2_04
+          version: 2.2.04
       - name: Print version
         run: yorick --version
 ```
