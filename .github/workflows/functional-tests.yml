@@ -10,41 +10,15 @@ on:
 jobs:
   setup-yorick:
     name: Setup yorick
-    timeout-minutes: 15
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
-#        version: ['y_2_2_04', 'y_2_2_03', 'y_2_2_02']
-        version: ['2.2.04']
+        version: ['2.2.04', '2.2.03', '2.2.02']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Yorick
-        uses: ./
-        with:
-          version: ${{ matrix.version }}
-      - name: Print version
-        run: yorick --version
-        shell: bash
-  setup-yorick-alpine:
-    name: Setup yorick (alpine-latest)
-    timeout-minutes: 15
-    strategy:
-      fail-fast: false
-      matrix:
-#        version: ['y_2_2_04', 'y_2_2_03', 'y_2_2_02']
-        version: ['2.2.03']
-    runs-on: ubuntu-latest
-    container:
-      image: alpine:latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install tools
-        run: |
-          apk update
-          apk add --update bash make build-base
-        shell: sh
       - name: Setup Yorick
         uses: ./
         with:
