@@ -28,7 +28,7 @@ runs:
         mkdir -p "$GITHUB_WORKSPACE/yorick"
         echo "YORICK_PATH=$GITHUB_WORKSPACE/yorick" >> $GITHUB_OUTPUT
         echo "YORICK_VERSION=${{ steps.version.outputs.result }}" >> $GITHUB_OUTPUT
-      shell: bash
+      shell: sh
     - name: Download yorick
       if: ${{ steps.info.outputs.YORICK_INSTALLED == 'false' }}
       uses: actions/checkout@v3
@@ -42,5 +42,5 @@ runs:
       run: |
         make install
         echo "${{ steps.info.outputs.YORICK_PATH }}/relocate/bin" >> $GITHUB_PATH
-      shell: bash
+      shell: sh
       working-directory: ${{ steps.info.outputs.YORICK_PATH }}
