@@ -9,8 +9,7 @@ This action installs a [Yorick](https://yorick.sourceforge.net).
 ## Prerequisites
 
 The following tools have to be installed for successful work of this GitHub action:
-[bash](https://www.gnu.org/software/bash), [git](https://git-scm.com), [gcc](https://gcc.gnu.org),
-[make](https://www.gnu.org/software/make/manual/make.html).
+[git](https://git-scm.com), [gcc](https://gcc.gnu.org), [make](https://www.gnu.org/software/make/manual/make.html).
 
 > `macOS` and `Ubuntu` are the only supported OS at this moment
 

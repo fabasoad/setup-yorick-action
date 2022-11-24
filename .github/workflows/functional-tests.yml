@@ -25,4 +25,4 @@ jobs:
           version: ${{ matrix.version }}
       - name: Print version
         run: yorick --version
-        shell: bash
+        shell: sh
