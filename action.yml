@@ -13,8 +13,14 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Fail
+      uses: actions/github-script@v6
+      if: ${{ runner.os == 'Windows' }}
+      with:
+        script: core.setFailed('${{ runner.os }} ${{ runner.arch }} is not supported');
     - name: Build version
       id: version
+      if: ${{ runner.os != 'Windows' }}
       uses: actions/github-script@v6
       with:
         script: |
@@ -22,6 +28,7 @@ runs:
           return `y_${a[0]}_${a[1]}_${a[2]}`;
     - name: Collect info
       id: info
+      if: ${{ runner.os != 'Windows' }}
       run: |
         YORICK_INSTALLED=$(if command -v yorick >/dev/null 2>&1; then echo true; else echo false; fi)
         echo "YORICK_INSTALLED=$YORICK_INSTALLED" >> $GITHUB_OUTPUT
@@ -30,7 +37,7 @@ runs:
         echo "YORICK_VERSION=${{ steps.version.outputs.result }}" >> $GITHUB_OUTPUT
       shell: sh
     - name: Download yorick
-      if: ${{ steps.info.outputs.YORICK_INSTALLED == 'false' }}
+      if: ${{ runner.os != 'Windows' && steps.info.outputs.YORICK_INSTALLED == 'false' }}
       uses: actions/checkout@v3
       with:
         repository: LLNL/yorick
@@ -38,7 +45,7 @@ runs:
         fetch-depth: 1
         path: yorick
     - name: Install yorick
-      if: ${{ steps.info.outputs.YORICK_INSTALLED == 'false' }}
+      if: ${{ runner.os != 'Windows' && steps.info.outputs.YORICK_INSTALLED == 'false' }}
       run: |
         make install
         echo "${{ steps.info.outputs.YORICK_PATH }}/relocate/bin" >> $GITHUB_PATH
