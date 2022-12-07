@@ -14,9 +14,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu-latest', 'macos-latest']
+        os: ['ubuntu', 'macos']
         version: ['2.2.04', '2.2.03', '2.2.02']
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
       - name: Setup Yorick
