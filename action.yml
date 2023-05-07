@@ -1,17 +1,17 @@
 ---
-name: 'Setup Yorick'
+name: "Setup Yorick"
 author: Yevhen Fabizhevskyi
-description: 'This action installs yorick.'
+description: "This action installs yorick."
 branding:
   icon: terminal
   color: gray-dark
 inputs:
   version:
-    description: 'yorick version.'
+    description: "yorick version."
     required: false
-    default: '2.2.04'
+    default: "2.2.04"
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Fail
       uses: actions/github-script@v6

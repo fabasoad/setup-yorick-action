@@ -16,9 +16,11 @@ The following tools have to be installed for successful work of this GitHub acti
 
 ## Inputs
 
+<!-- prettier-ignore-start -->
 | Name    | Required | Description                                                                  | Default  | Possible values          |
 |---------|----------|------------------------------------------------------------------------------|----------|--------------------------|
 | version | No       | Yorick version that can be found [here](https://github.com/LLNL/yorick/tags) | `2.2.04` | `2.2.03`, `2.2.02`, etc. |
+<!-- prettier-ignore-end -->
 
 ## Example usage
 
