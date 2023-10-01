@@ -38,7 +38,7 @@ runs:
       shell: sh
     - name: Download yorick
       if: ${{ runner.os != 'Windows' && steps.info.outputs.YORICK_INSTALLED == 'false' }}
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: LLNL/yorick
         ref: ${{ steps.info.outputs.YORICK_VERSION }}
