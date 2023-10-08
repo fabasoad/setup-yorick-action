@@ -22,7 +22,7 @@ jobs:
         version: ["2.2.04", "2.2.03", "2.2.02"]
     runs-on: ${{ matrix.os }}-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Yorick
         uses: ./
         with:

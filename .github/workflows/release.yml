@@ -1,5 +1,5 @@
 ---
-name: Create release
+name: Release
 
 on: # yamllint disable-line rule:truthy
   push:
@@ -8,10 +8,10 @@ on: # yamllint disable-line rule:truthy
 
 jobs:
   create-release:
-    name: Release
+    name: Create release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Get changelog
