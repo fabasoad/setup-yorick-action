@@ -3,14 +3,15 @@
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 ![GitHub release](https://img.shields.io/github/v/release/fabasoad/setup-yorick-action?include_prereleases)
 ![functional-tests](https://github.com/fabasoad/setup-yorick-action/actions/workflows/functional-tests.yml/badge.svg)
-![pre-commit](https://github.com/fabasoad/setup-yorick-action/actions/workflows/pre-commit.yml/badge.svg)
+![security](https://github.com/fabasoad/setup-yorick-action/actions/workflows/security.yml/badge.svg)
+![linting](https://github.com/fabasoad/setup-yorick-action/actions/workflows/linting.yml/badge.svg)
 
 This action installs a [Yorick](https://yorick.sourceforge.net).
 
 ## Prerequisites
 
 The following tools have to be installed for successful work of this GitHub action:
-[git](https://git-scm.com), [gcc](https://gcc.gnu.org), [make](https://www.gnu.org/software/make/manual/make.html).
+[gcc](https://gcc.gnu.org), [make](https://www.gnu.org/software/make/manual/make.html).
 
 > `macOS` and `Ubuntu` are the only supported OS at this moment
 
