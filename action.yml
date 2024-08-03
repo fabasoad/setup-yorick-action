@@ -30,24 +30,24 @@ runs:
     - name: Collect info
       id: info
       run: |
-        YORICK_INSTALLED=$(if command -v yorick >/dev/null 2>&1; then echo true; else echo false; fi)
-        echo "YORICK_INSTALLED=$YORICK_INSTALLED" >> $GITHUB_OUTPUT
-        mkdir -p "$GITHUB_WORKSPACE/yorick"
-        echo "YORICK_PATH=$GITHUB_WORKSPACE/yorick" >> $GITHUB_OUTPUT
-        echo "YORICK_VERSION=${{ steps.version.outputs.result }}" >> "$GITHUB_OUTPUT"
+        yorick_installed=$(if command -v yorick >/dev/null 2>&1; then echo true; else echo false; fi)
+        echo "yorick-installed=${yorick_installed}" >> "$GITHUB_OUTPUT"
+        mkdir -p "${GITHUB_WORKSPACE}/yorick"
+        echo "yorick-path=${GITHUB_WORKSPACE}/yorick" >> "$GITHUB_OUTPUT"
+        echo "yorick-version=${{ steps.version.outputs.result }}" >> "$GITHUB_OUTPUT"
       shell: sh
-    - name: Download yorick
-      if: ${{ steps.info.outputs.YORICK_INSTALLED == 'false' }}
+    - name: Checkout LLNL/yorick
+      if: ${{ steps.info.outputs.yorick-installed == 'false' }}
       uses: actions/checkout@v4
       with:
         repository: LLNL/yorick
-        ref: ${{ steps.info.outputs.YORICK_VERSION }}
+        ref: ${{ steps.info.outputs.yorick-version }}
         fetch-depth: 1
         path: yorick
     - name: Install yorick
-      if: ${{ steps.info.outputs.YORICK_INSTALLED == 'false' }}
+      if: ${{ steps.info.outputs.yorick-installed == 'false' }}
       run: |
         make install
-        echo "${{ steps.info.outputs.YORICK_PATH }}/relocate/bin" >> "$GITHUB_PATH"
+        echo "${{ steps.info.outputs.yorick-path }}/relocate/bin" >> "$GITHUB_PATH"
       shell: sh
-      working-directory: ${{ steps.info.outputs.YORICK_PATH }}
+      working-directory: "${{ steps.info.outputs.yorick-path }}"
