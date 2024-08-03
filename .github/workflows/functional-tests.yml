@@ -2,10 +2,10 @@
 name: Functional Tests
 
 on: # yamllint disable-line rule:truthy
+  pull_request: {}
   push:
     branches:
       - "main"
-  pull_request:
 
 defaults:
   run:
@@ -18,9 +18,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu", "macos"]
+        runner: ["ubuntu-latest", "macos-12"]
         version: ["2.2.04", "2.2.03", "2.2.02"]
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v4
