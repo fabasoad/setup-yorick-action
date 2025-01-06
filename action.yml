@@ -68,6 +68,7 @@ runs:
 
     - name: Install yorick
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
+      id: install-yorick
       run: |
         make install
         echo "$(pwd)/relocate/bin" >> "$GITHUB_PATH"

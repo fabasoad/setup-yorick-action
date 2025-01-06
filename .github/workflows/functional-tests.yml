@@ -41,9 +41,9 @@ jobs:
             | jq -c -r --arg n "${RELEASES_AMOUNT}" '[.[0:($n | tonumber)][].name] | . += ["latest"]')
           echo "versions=${versions}" >> "$GITHUB_OUTPUT"
   setup-yorick:
-    name: Setup yorick (${{ matrix.os }})
+    name: Setup yorick
     needs: [get-versions]
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{ matrix.os }}-${{ matrix.os == 'ubuntu' && 'latest' || '12' }}
     timeout-minutes: 5
     strategy:
       fail-fast: false
