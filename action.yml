@@ -36,18 +36,6 @@ runs:
         exit 1
       shell: sh
 
-    - name: Build version
-      if: ${{ inputs.version != 'latest' }}
-      id: build-version
-      env:
-        INPUT_VERSION: "${{ inputs.version }}"
-      run: |
-        major="$(echo "${INPUT_VERSION}" | cut -d. -f1)"
-        minor="$(echo "${INPUT_VERSION}" | cut -d. -f2)"
-        patch="$(echo "${INPUT_VERSION}" | cut -d. -f3)"
-        echo "value=y_${major}_${minor}_${patch}" >> "$GITHUB_OUTPUT"
-      shell: sh
-
     - name: Collect info
       id: info
       env:
@@ -74,7 +62,7 @@ runs:
       uses: actions/checkout@v4
       with:
         repository: "LLNL/yorick"
-        ref: ${{ inputs.version == 'latest' && steps.latest-release.outputs.version || steps.build-version.outputs.value }}
+        ref: ${{ inputs.version == 'latest' && steps.latest-release.outputs.version || inputs.version }}
         fetch-depth: 1
         path: ${{ steps.info.outputs.bin-dir }}
 

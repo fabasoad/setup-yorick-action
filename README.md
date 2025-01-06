@@ -27,10 +27,26 @@ The following tools have to be installed for successful work of this GitHub acti
 
 ## Inputs
 
+```yaml
+- uses: fabasoad/setup-yorick-action@v0
+  with:
+    # (Optional) yorick version. Defaults to the latest version.
+    version: "y_2_2_04"
+    # (Optional) If "false" skips installation if yorick is already installed.
+    # If "true" installs yorick in any case. Defaults to "false".
+    force: "false"
+    # (Optional) GitHub token that is used to send requests to GitHub API such
+    # as getting latest release. Defaults to the token provided by GitHub Actions
+    # environment.
+    github-token: "${{ github.token }}"
+```
+
+## Outputs
+
 <!-- prettier-ignore-start -->
-| Name    | Required | Description                                                                  | Default  | Possible values          |
-|---------|----------|------------------------------------------------------------------------------|----------|--------------------------|
-| version | No       | Yorick version that can be found [here](https://github.com/LLNL/yorick/tags) | `2.2.04` | `2.2.03`, `2.2.02`, etc. |
+| Name      | Description                         | Example |
+|-----------|-------------------------------------|---------|
+| installed | Whether yorick was installed or not | `true`  |
 <!-- prettier-ignore-end -->
 
 ## Example usage
@@ -47,10 +63,10 @@ jobs:
     name: yorick
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
-      - uses: fabasoad/setup-yorick-action@main
+      - uses: actions/checkout@v4
+      - uses: fabasoad/setup-yorick-action@v0
         with:
-          version: 2.2.04
+          version: y_2_2_04
       - name: Print version
         run: yorick --version
         shell: sh
