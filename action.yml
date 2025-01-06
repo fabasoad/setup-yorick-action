@@ -7,47 +7,85 @@ branding:
   color: gray-dark
 inputs:
   version:
-    description: "yorick version."
+    description: yorick version. Defaults to the latest version.
     required: false
-    default: "2.2.04"
+    default: "latest"
+  force:
+    description: |
+      If "false" skips installation if yorick is already installed. If "true"
+      installs yorick in any case. Defaults to "false".
+    required: false
+    default: "false"
+  github-token:
+    description: |
+      GitHub token that is used to send requests to GitHub API such as getting
+      latest release. Defaults to the token provided by GitHub Actions environment.
+    required: false
+    default: ${{ github.token }}
+outputs:
+  installed:
+    description: Whether yorick was installed or not.
+    value: "${{ steps.install-yorick.outcome == 'success' }}"
 runs:
   using: "composite"
   steps:
     - name: Fail
       if: ${{ runner.os == 'Windows' }}
-      run: echo "::error::${RUNNER_OS} ${RUNNER_ARCH} is not supported" && exit 1
+      run: |
+        echo "::error title=OS is not supported::${RUNNER_OS} ${RUNNER_ARCH} is not supported"
+        exit 1
       shell: sh
+
     - name: Build version
-      id: version
+      if: ${{ inputs.version != 'latest' }}
+      id: build-version
       env:
         INPUT_VERSION: "${{ inputs.version }}"
       run: |
         major="$(echo "${INPUT_VERSION}" | cut -d. -f1)"
         minor="$(echo "${INPUT_VERSION}" | cut -d. -f2)"
         patch="$(echo "${INPUT_VERSION}" | cut -d. -f3)"
-        echo "result=y_${major}_${minor}_${patch}" >> "$GITHUB_OUTPUT"
+        echo "value=y_${major}_${minor}_${patch}" >> "$GITHUB_OUTPUT"
       shell: sh
+
     - name: Collect info
       id: info
-      run: |
-        yorick_installed=$(if command -v yorick >/dev/null 2>&1; then echo true; else echo false; fi)
-        echo "yorick-installed=${yorick_installed}" >> "$GITHUB_OUTPUT"
-        mkdir -p "${GITHUB_WORKSPACE}/yorick"
-        echo "yorick-path=${GITHUB_WORKSPACE}/yorick" >> "$GITHUB_OUTPUT"
-        echo "yorick-version=${{ steps.version.outputs.result }}" >> "$GITHUB_OUTPUT"
+      env:
+        INPUT_FORCE: "${{ inputs.force }}"
+      run: ./collect-info.sh "${INPUT_FORCE}"
       shell: sh
-    - name: Checkout LLNL/yorick
-      if: ${{ steps.info.outputs.yorick-installed == 'false' }}
+      working-directory: "${{ github.action_path }}/src"
+
+    - name: Setup jq
+      if: ${{ steps.info.outputs.bin-installed == 'false' }}
+      uses: dcarbone/install-jq-action@v3
+
+    - name: Get latest release
+      if: ${{ steps.info.outputs.bin-installed == 'false' && inputs.version == 'latest' }}
+      id: latest-release
+      env:
+        INPUT_GITHUB_TOKEN: "${{ inputs.github-token }}"
+      run: ./get-latest-release.sh "LLNL/yorick" "${INPUT_GITHUB_TOKEN}"
+      shell: sh
+      working-directory: "${{ github.action_path }}/src"
+
+    - name: Download yorick
+      if: ${{ steps.info.outputs.bin-installed == 'false' }}
       uses: actions/checkout@v4
       with:
-        repository: LLNL/yorick
-        ref: ${{ steps.info.outputs.yorick-version }}
+        repository: "LLNL/yorick"
+        ref: ${{ inputs.version == 'latest' && steps.latest-release.outputs.version || steps.build-version.outputs.value }}
         fetch-depth: 1
-        path: yorick
+        path: ${{ steps.info.outputs.bin-dir }}
+
     - name: Install yorick
-      if: ${{ steps.info.outputs.yorick-installed == 'false' }}
+      if: ${{ steps.info.outputs.bin-installed == 'false' }}
       run: |
         make install
-        echo "${{ steps.info.outputs.yorick-path }}/relocate/bin" >> "$GITHUB_PATH"
+        echo "$(pwd)/relocate/bin" >> "$GITHUB_PATH"
       shell: sh
-      working-directory: "${{ steps.info.outputs.yorick-path }}"
+      working-directory: "${{ steps.info.outputs.bin-path }}"
+
+    - name: Print version
+      run: yorick --version
+      shell: sh
