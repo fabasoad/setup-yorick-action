@@ -69,7 +69,6 @@ jobs:
           version: y_2_2_04
       - name: Print version
         run: yorick --version
-        shell: sh
 ```
 
 ### Result
