@@ -46,9 +46,7 @@ runs:
 
     - name: Setup dependencies
       if: ${{ steps.info.outputs.bin-installed == 'false' && runner.os == 'Linux' }}
-      run: |
-        #sudo apt update
-        sudo apt install libx11-dev
+      run: sudo apt install libx11-dev
       shell: sh
 
     - name: Setup jq
