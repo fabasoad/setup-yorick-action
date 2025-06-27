@@ -22,7 +22,7 @@ This action installs a [Yorick](https://yorick.sourceforge.net).
 
 ## Prerequisites
 
-The following tools have to be installed for successful work of this GitHub action:
+The following tools have to be installed for successful work of this GitHub Action:
 [gcc](https://gcc.gnu.org), [make](https://www.gnu.org/software/make/manual/make.html).
 
 ## Inputs
@@ -78,3 +78,7 @@ Run yorick --version
 Copyright (c) 2005.  The Regents of the University of California.
 All rights reserved.  Yorick 2.2.04 ready.  For help type 'help'
 ```
+
+## Contributions
+
+![Alt](https://repobeats.axiom.co/api/embed/bfc59bafc868d2af2c3f3f229dab9cd83617f68b.svg "Repobeats analytics image")
