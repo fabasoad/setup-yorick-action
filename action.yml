@@ -64,7 +64,7 @@ runs:
 
     - name: Download yorick
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: "LLNL/yorick"
         ref: ${{ inputs.version == 'latest' && steps.latest-release.outputs.version || inputs.version }}
