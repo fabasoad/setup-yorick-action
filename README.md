@@ -63,7 +63,7 @@ jobs:
     name: yorick
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: fabasoad/setup-yorick-action@v0
         with:
           version: y_2_2_04
