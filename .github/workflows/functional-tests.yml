@@ -52,7 +52,7 @@ jobs:
         version: ${{ fromJSON(needs.get-versions.outputs.versions) }}
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Yorick
         uses: ./
         with:
@@ -69,7 +69,7 @@ jobs:
         force: ["true", "false"]
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup yorick 1
         id: setup-yorick-1
         uses: ./
