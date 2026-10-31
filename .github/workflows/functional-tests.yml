@@ -44,18 +44,18 @@ jobs:
   setup-yorick:
     name: Setup yorick
     needs: [get-versions]
-    runs-on: ${{ matrix.os }}-latest
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 5
     permissions:
       contents: read
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu"]
+        os: ["ubuntu-24.04"]
         version: ${{ fromJSON(needs.get-versions.outputs.versions) }}
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: "false"
       - name: Setup Yorick
@@ -66,7 +66,7 @@ jobs:
         run: yorick --version
   test-force:
     name: Test force
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     permissions:
       contents: read
@@ -76,7 +76,7 @@ jobs:
         force: ["true", "false"]
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: "false"
       - name: Setup yorick 1
