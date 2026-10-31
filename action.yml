@@ -72,9 +72,20 @@ runs:
         path: ${{ steps.info.outputs.bin-dir }}
         persist-credentials: "false"
 
+    - name: Detect C flags
+      if: ${{ steps.info.outputs.bin-installed == 'false' }}
+      id: cflags
+      run: ./detect-cflags.sh
+      shell: sh
+      working-directory: "${{ github.action_path }}/src"
+
     - name: Install yorick
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
       id: install-yorick
+      env:
+        # ./configure forwards non-optimization CFLAGS to Y_CFLAGS, which is
+        # applied to every compilation.
+        CFLAGS: "${{ steps.cflags.outputs.cflags }}"
       run: |
         make install
         echo "$(pwd)/relocate/bin" >> "$GITHUB_PATH"
